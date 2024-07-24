@@ -3,6 +3,10 @@
  * https://jestjs.io/docs/configuration
  */
 
+module.exports = {
+  testEnvironment: 'node',
+};
+
 /** @type {import('jest').Config} */
 const config = {
   // All imported modules in your tests should be mocked automatically
