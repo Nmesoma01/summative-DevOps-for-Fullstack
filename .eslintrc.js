@@ -3,9 +3,12 @@ module.exports = {
         "browser": true,
         "es2021": true,
         "node": true,
-        "jest": true,
+        "jest/globals": true
     },
-    "extends": "airbnb-base",
+    "extends": [
+        "airbnb-base",
+        "plugin:jest/recommended"
+    ],
     "overrides": [
         {
             "env": {
@@ -24,5 +27,6 @@ module.exports = {
         "sourceType": "module"
     },
     "rules": {
-    }
-}
+    },
+    "plugins": ["jest"]
+};
