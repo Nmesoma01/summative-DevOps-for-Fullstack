@@ -1,19 +1,28 @@
 module.exports = {
-    env: {
-      browser: true,
-      es2021: true,
+    "env": {
+        "browser": true,
+        "es2021": true,
+        "node": true,
+        "jest": true,
     },
-    extends: [
-      'eslint:recommended',
-      'plugin:react/recommended',
-      'airbnb',
+    "extends": "airbnb-base",
+    "overrides": [
+        {
+            "env": {
+                "node": true
+            },
+            "files": [
+                ".eslintrc.{js,cjs}"
+            ],
+            "parserOptions": {
+                "sourceType": "script"
+            }
+        }
     ],
-    parserOptions: {
-      ecmaVersion: 12,
-      sourceType: 'module',
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
     },
-    rules: {
-      // Customize your ESLint rules here
-    },
-  };
-  
+    "rules": {
+    }
+}
