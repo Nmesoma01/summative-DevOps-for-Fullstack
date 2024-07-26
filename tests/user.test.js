@@ -1,4 +1,3 @@
-// tests/user.test.js
 /* globals describe, expect, test */
 
 describe('Simple Jest Test', () => {
