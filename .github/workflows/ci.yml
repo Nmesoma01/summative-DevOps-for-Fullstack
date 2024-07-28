@@ -28,7 +28,7 @@ jobs:
       run: npm test
 
     - name: Authenticate Snyk
-      run: snyk auth ${{ secrets.DOCKER_PASSWORD }}
+      run: snyk auth ${{ secrets.SYNK_TOKEN }}
 
     - name: Run security scan
       run: npm run security
