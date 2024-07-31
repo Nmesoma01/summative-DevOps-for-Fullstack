@@ -1,0 +1,95 @@
+---
+- hosts: servers
+  become: true  
+  vars_prompt:
+    - name: "ansible_become_pass"
+      prompt: "Enter sudo password"
+      private: yes
+  tasks:
+    - name: Update package lists
+      apt:
+        update_cache: yes
+
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - nodejs
+        - npm
+        - nginx
+        - vim
+        - net-tools
+
+    - name: Create a user for Ansible
+      user:
+        name: jeff01
+        state: present
+        groups: sudo
+
+    - name: Set password for Ansible user (temporary)
+      user:
+        name: jeff01
+        password: "$6$BM9HwQnL7htCltxN$/BqichannKJJyZz/GKUaoabtTSsLu3ZeEMEKuIZZD79gzKYEtiHG5joRmgo2Kpqs1/hrBTzBZCQLuowhZtEo5/"
+        state: present
+
+    - name: Copy SSH public key to authorized_keys for Ansible user
+      authorized_key:
+        user: jeff01
+        key: "{{ lookup('file', '/home/nmesoma01/.ssh/id_rsa.pub') }}"
+        state: present
+
+    - name: Disable password authentication for SSH
+      lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: '^PasswordAuthentication'
+        line: 'PasswordAuthentication no'
+        state: present
+
+    - name: Restart SSH service
+      service:
+        name: sshd
+        state: restarted
+
+    - name: Create a directory for the Node.js app
+      file:
+        path: /var/www/nodejs_app
+        state: directory
+        owner: www-data
+        group: www-data
+
+    - name: Copy the Node.js application code
+      copy:
+        src: ../nodejs_app/  # Replace with your app directory
+        dest: /var/www/nodejs_app/
+        owner: www-data
+        group: www-data
+
+    - name: Install Node.js dependencies
+      npm:
+        path: /var/www/nodejs_app/
+        production: yes  # Install production dependencies
+
+    - name: Configure Nginx for the Node.js app
+      template:
+        src: nginx.conf.j2  # Replace with your Nginx template file
+        dest: /etc/nginx/sites-available/default
+        owner: root
+        group: root
+        mode: '0644'
+
+    - name: Enable the Nginx configuration for the Node.js app
+      file:
+        src: /etc/nginx/sites-available/default
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+        owner: root
+        group: root
+
+    - name: Restart Nginx service
+      service:
+        name: nginx
+        state: restarted
+
+  vars:
+    ansible_password: "DevOps@2022J"  # Adjust as needed
