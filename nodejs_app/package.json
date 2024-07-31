@@ -1,16 +1,3 @@
-{
-  "name": "nodejs_app",
-  "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
-  "dependencies": {
-    "express": "^4.19.2",
-    "prom-client": "^15.1.3"
-  }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:449bac23b8e10b6d777b9d4ab2244c5ba1b7ae0ac0236eb5b310d23ad82af0a2
+size 304
