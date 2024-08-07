@@ -113,7 +113,7 @@ jobs:
 
     - name: Push Docker image
       run: docker push nmesoma01/nodejs-blogging-api
-...
+```
 
 
 ## Monitoring and Logging
